@@ -1,8 +1,8 @@
 {
-  "name": "mean-cluster-backend",
+  "name": "back-end",
   "version": "0.0.1",
-  "description": "backend services for the meanstack consul demo",
-  "main": "index.js",
+  "description": "backend express nodejs demo",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
