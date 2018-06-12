@@ -12,6 +12,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
   console.log("Connected successfully to server");
+  GetMessages();
 });
 var msgSchema = mongoose.Schema({
     msg: String
@@ -35,7 +36,12 @@ app.post('/api/message', function(req,res){
     res.status(200);
 })
 
+function GetMessages(){
+    Message.find({}).exec(function(er, result){
+        console.log(result)
+    })
 
+}
 
 var server = app.listen(5000, function(){
     console.log('listening on port ', server.address().port)
