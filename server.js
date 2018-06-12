@@ -1,9 +1,23 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var mongo = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 
-var database;
+
+mongoose.connect('mongodb://localhost:27017/test');
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+  console.log("Connected successfully to server");
+});
+var msgSchema = mongoose.Schema({
+    msg: String
+  });
+
+  var Message = mongoose.model('Message', msgSchema);
 
 app.use(bodyParser.json());
 
@@ -15,17 +29,13 @@ app.use(function(req,res,next){
 
 app.post('/api/message', function(req,res){
     console.log(req.body);
-    database.collection('messages').insertOne(req.body);
+    var msg = new Message(req.body);
+    msg.save();
 
     res.status(200);
 })
 
-mongo.connect("mongodb://localhost:27017/test", function(err,db){
-    if(!err){
-        console.log("we are connected to mongo");
-        database = db;
-    }
-})
+
 
 var server = app.listen(5000, function(){
     console.log('listening on port ', server.address().port)
