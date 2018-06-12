@@ -1,0 +1,15 @@
+{
+  "name": "mean-cluster-backend",
+  "version": "0.0.1",
+  "description": "backend services for the meanstack consul demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Guy Barros",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}
