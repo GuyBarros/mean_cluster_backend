@@ -12,7 +12,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
   console.log("Connected successfully to server");
-  GetMessages();
 });
 var msgSchema = mongoose.Schema({
     msg: String
@@ -28,6 +27,8 @@ app.use(function(req,res,next){
     next();
 })
 
+app.get('/api/message',GetMessages)
+
 app.post('/api/message', function(req,res){
     console.log(req.body);
     var msg = new Message(req.body);
@@ -36,9 +37,13 @@ app.post('/api/message', function(req,res){
     res.status(200);
 })
 
-function GetMessages(){
+app.post('/auth/register',function(req,res){
+    console.log(req.body)
+})
+
+function GetMessages(req,res){
     Message.find({}).exec(function(er, result){
-        console.log(result)
+       res.send(result);
     })
 
 }
