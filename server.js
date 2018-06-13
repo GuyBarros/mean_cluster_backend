@@ -27,7 +27,7 @@ app.use(cors);
 app.get('/api/message',message.get)
 app.post('/api/message',checkAuthenticated, message.post)
 app.post('/auth/register', auth.register)
-
+app.post('/auth/login', auth.login)
 
 //Start the Server
 var server = app.listen(5000, function(){
