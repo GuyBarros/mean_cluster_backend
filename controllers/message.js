@@ -2,13 +2,14 @@ var Message = require('../models/message');
 
 module.exports = {
     get:function (req,res){
-        Message.find({}).exec(function(er, result){
+        Message.find({}).populate('user','-pwd').exec(function(er, result){
            res.send(result);
         })
     
     },
     post: function(req,res){
-        console.log(req.body);
+        console.log(req.body, req.user);
+        req.body.user = req.user;
         var msg = new Message(req.body);
         msg.save();
     
