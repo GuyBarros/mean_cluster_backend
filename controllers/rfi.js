@@ -1,4 +1,4 @@
-var Rfi = require('../models/rfi');
+var Rfi = require('../models/Rfi');
 
 module.exports = {
     get:function (req,res){
