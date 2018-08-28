@@ -7,6 +7,15 @@ var message = require('./controllers/message');
 var rfi = require('./controllers/rfi');
 var checkAuthenticated = require('./services/checkAuthenticated');
 var cors = require('./services/cors');
+const args = require('yargs').argv;
+var port = 5000;
+
+try {
+
+  port = args.port
+} catch (error) {
+  console.error(error);    
+}
 
 
 //MongoDb Connection
@@ -33,6 +42,6 @@ app.post('/auth/register', auth.register)
 app.post('/auth/login', auth.login)
 
 //Start the Server
-var server = app.listen(5000, function(){
+var server = app.listen(port, function(){
     console.log('listening on port ', server.address().port)
 })
