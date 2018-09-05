@@ -10,13 +10,14 @@ var cors = require('./services/cors');
 const args = require('yargs').argv;
 var port = 5000;
 
+/**
 try {
 
   port = args.port
 } catch (error) {
   console.error(error);    
 }
-
+**/
 
 //MongoDb Connection
 mongoose.connect('mongodb://localhost:27017/test');
