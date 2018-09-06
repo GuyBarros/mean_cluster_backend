@@ -7,7 +7,7 @@ var message = require('./controllers/message');
 var rfi = require('./controllers/rfi');
 var checkAuthenticated = require('./services/checkAuthenticated');
 var cors = require('./services/cors');
-const args = require('yargs').argv;
+//const args = require('yargs').argv;
 var port = 5000;
 
 /**
