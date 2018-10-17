@@ -8,8 +8,8 @@ var rfi = require('./controllers/rfi');
 var checkAuthenticated = require('./services/checkAuthenticated');
 var cors = require('./services/cors');
 var consul = require('consul')();
-consul.host =  process.env.CONSUL_URL;
-//consul.host =  consul.service.consul
+//consul.host =  process.env.CONSUL_URL;
+consul.host =  "consul.service.consul";
 var port = 5000;
 var mongodbport = 27017;
 
