@@ -7,22 +7,43 @@ var message = require('./controllers/message');
 var rfi = require('./controllers/rfi');
 var checkAuthenticated = require('./services/checkAuthenticated');
 var cors = require('./services/cors');
-//const args = require('yargs').argv;
+var consul = require('consul')();
+consul.host =  process.env.CONSUL_URL;
+//consul.host =  consul.service.consul
 var port = 5000;
 
-/**
-try {
+consul.agent.members(function(err, result) {
+  if (err) throw err;
+// console.log("consul members : ", result );
+});
 
-  port = args.port
-} catch (error) {
-  console.error(error);    
-}
-**/
+consul.agent.service.list(function(err, result) {
+  if (err) throw err;
+console.log("consul services : ", result);
+});
+
+consul.catalog.node.services('mongodb', function(err, result) {
+  if (err) throw err;
+console.log("consul response : ", result);
+});
+
+var Request = require("request");
+
+Request.get("http://"+consul.host+":8500/v1/catalog/service/mongodb", (error, response, body) => {
+    if(error) {
+        return console.dir(error);
+    }
+    retorno = JSON.parse(body);
+     mongodbport = retorno[0].ServicePort;
+ console.log("Service Port : ", retorno[0].ServicePort)
+
+});
+
 
 //MongoDb Connection
 //mongoose.connect('mongodb://localhost:27017/test');
 
-mongoose.connect('mongodb://mongodb.service.consul:27017/test');
+mongoose.connect('mongodb://mongodb.service.consul:'+port+'/test');
 
 
 var db = mongoose.connection;
