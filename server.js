@@ -11,6 +11,7 @@ var consul = require('consul')();
 consul.host =  process.env.CONSUL_URL;
 //consul.host =  consul.service.consul
 var port = 5000;
+var mongodbport = 27017;
 
 consul.agent.members(function(err, result) {
   if (err) throw err;
@@ -43,7 +44,7 @@ Request.get("http://"+consul.host+":8500/v1/catalog/service/mongodb", (error, re
 //MongoDb Connection
 //mongoose.connect('mongodb://localhost:27017/test');
 
-mongoose.connect('mongodb://mongodb.service.consul:'+port+'/test');
+mongoose.connect('mongodb://mongodb.service.consul:'+mongodbport+'/test');
 
 
 var db = mongoose.connection;
