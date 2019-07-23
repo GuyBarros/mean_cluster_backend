@@ -7,14 +7,17 @@ var message = require('./controllers/message');
 var rfi = require('./controllers/rfi');
 var checkAuthenticated = require('./services/checkAuthenticated');
 var cors = require('./services/cors');
+var mongourl = process.env.MONGO_URL;
+var port = 5000;
+var mongodbport;
+var db;
+/* 
 var consul = require('consul')({
 });
 //consul.host =  process.env.CONSUL_URL;
 consul.host =  "consul.service.consul";
 consul.port = "8533"
-var port = 5000;
-var mongodbport;
-var db;
+
 consul.agent.members(function(err, result) {
   if (err) throw err;
 // console.log("consul members : ", result );
@@ -29,19 +32,13 @@ consul.catalog.node.services('mongodb', function(err, result) {
   if (err) throw err;
 console.log("consul response : ", result);
 });
-
+*/
 var Request = require("request");
 
-Request.get("https://"+consul.host+":"+consul.port+"/v1/catalog/service/mongodb", (error, response, body) => {
-    if(error) {
-        return console.dir(error);
-    }
-    retorno = JSON.parse(body);
-     mongodbport = retorno[0].ServicePort;
- console.log("Service Port : ", retorno[0].ServicePort)
-//MongoDb Connection
 
-mongoose.connect('mongodb://mongodb.service.consul:'+mongodbport+'/test');
+//MongoDb Connection
+ 'mongodb://'+mongourl+'/test'
+// mongoose.connect('mongodb:///test');
 
 
 db = mongoose.connection;
@@ -51,7 +48,7 @@ db.once('open', function() {
   console.log("Connected successfully to server");
 });
 
-});
+
 
 //Middleware
 app.use(bodyParser.json());
